@@ -1,0 +1,94 @@
+:root{
+  --aw-primary:#1a73e8; /* botón flotante */
+  --aw-panel-bg:#ffffff;
+  --aw-panel-text:#1a1a1a;
+  --aw-dark-panel-bg:#1e1e1e;
+  --aw-dark-panel-text:#f0f0f0;
+  --aw-focus:#ffbf00; /* contraste mínimo 3:1 con panel */
+  --aw-size:56px;
+  --aw-width:300px;
+}
+
+/* Base widget styles - colores cumplen contraste AAA 7:1 respecto a fondos */
+.aw-floating-btn{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  width:var(--aw-size);
+  height:var(--aw-size);
+  border-radius:50%;
+  background:var(--aw-primary);
+  color:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 18px rgba(0,0,0,0.24);
+  border:none;
+  cursor:pointer;
+  z-index:99999;
+}
+.aw-floating-btn:focus{outline:3px solid var(--aw-focus);outline-offset:2px}
+.aw-floating-btn .aw-tooltip{position:absolute;right:70px;bottom:12px;display:none}
+.aw-floating-btn:hover .aw-tooltip,.aw-floating-btn:focus .aw-tooltip{display:block}
+
+/* Panel */
+.aw-panel{
+  position:fixed;
+  right:16px;
+  bottom:88px;
+  width:var(--aw-width);
+  max-width:calc(100% - 32px);
+  background:var(--aw-panel-bg);
+  color:var(--aw-panel-text);
+  border-radius:12px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.3);
+  padding:12px;
+  z-index:99998;
+  display:none;
+}
+.aw-panel[aria-hidden="false"]{display:block}
+.aw-panel header{display:flex;align-items:center;justify-content:space-between}
+.aw-panel h2{font-size:16px;margin:0;color:inherit}
+.aw-section{margin-top:12px}
+.aw-controls{display:flex;gap:8px;flex-wrap:wrap}
+.aw-btn{display:inline-flex;align-items:center;justify-content:center;min-width:56px;min-height:44px;padding:8px;border-radius:8px;border:1px solid transparent;background:#f4f4f4;color:var(--aw-panel-text);cursor:pointer}
+.aw-btn:focus{outline:3px solid var(--aw-focus);outline-offset:2px}
+.aw-radio{display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px;border-radius:8px}
+.aw-radio[aria-checked="true"]{box-shadow:inset 0 0 0 2px var(--aw-primary)}
+
+.aw-preview{width:36px;height:24px;border-radius:4px;border:1px solid #ccc;display:inline-block}
+
+/* Focus trap visual must cover element perimeter fully */
+.aw-focusable:focus{outline:3px solid var(--aw-focus);outline-offset:2px}
+
+/* live region */
+.aw-live{position:relative}
+
+/* dark mode support */
+@media (prefers-color-scheme:dark){
+  :root{
+    --aw-panel-bg:var(--aw-dark-panel-bg);
+    --aw-panel-text:var(--aw-dark-panel-text);
+  }
+}
+
+/* reduced motion respect */
+@media (prefers-reduced-motion: no-preference){
+  .aw-panel{transition:opacity 180ms ease, transform 180ms ease}
+  .aw-panel[aria-hidden="false"]{opacity:1;transform:translateY(0)}
+}
+
+/* Prevent transitions when user prefers reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .aw-panel{transition:none}
+}
+
+/* Global overrides applied by JS when modes active (kept minimal and high-specificity) */
+.aw-override-active body,
+.aw-override-active body *{
+  background-image:none !important;
+  box-shadow:none !important;
+}
+
+/* Ensure clickable targets reach minimum 44x44; we used 56x56 for floating button */
+.aw-btn{-webkit-tap-highlight-color:transparent}

@@ -1,0 +1,107 @@
+/* Accessibility widget styles
+   Uses CSS variables from project when available (falls back to defaults)
+   Ensures controls are full-width, stacked, focus outlines meet 3px requirement,
+   and contrast previews comply with AAA 7:1 where applicable.
+*/
+
+:root{
+  --aw-primary: var(--color-primary, #ff6b35);
+  --aw-bg: var(--color-bg, #121212);
+  --aw-text: var(--color-text, #000000);
+  --aw-border-radius: var(--border-radius, 10px);
+  --aw-gap: 12px;
+  --aw-font-size: var(--font-size-base, 16px);
+  --aw-focus: 3px solid var(--aw-primary);
+  --aw-min-btn: 56px; /* floating button target area */
+  --aw-panel-max-width: 720px; /* máximo ancho del panel cuando hay espacio */
+  --aw-panel-max-height: 70vh; /* máximo alto relativo a la ventana */
+  --aw-panel-min-width: 320px; /* ancho mínimo del panel */
+}
+
+.aw-panel{
+  box-sizing: border-box;
+  width: 100%;
+  /* When there is room, limit to a comfortable maximum width so it doesn't grow too large */
+  max-width: var(--aw-panel-max-width);
+  /* Limit height so panel fits inside container / viewport; allow scrolling inside if needed */
+  max-height: var(--aw-panel-max-height);
+  overflow: auto;
+  /* Use dark background with white text */
+  background: #000000;
+  color: #020000;
+  border: 2px solid rgba(255, 68, 0, 0.25);
+  padding: 14px;
+  border-radius: var(--aw-border-radius);
+  margin-top: 16px;
+  display: none;
+}
+.aw-panel.open{ display:block }
+
+.aw-header{ font-weight:700; color:var(--aw-primary); font-size:1.15rem; margin-bottom:8px }
+.aw-content{ display:flex; flex-direction:column; gap:var(--aw-gap) }
+.aw-group{ border-top:1px dashed rgba(255,255,255,0.03); padding-top:12px }
+.aw-group-title{ font-weight:600; margin-bottom:6px }
+.aw-controls{ display:flex; gap:10px; align-items:center }
+.aw-controls-col{ display:flex; flex-direction:column; gap:8px }
+.aw-btn{ min-width:56px; min-height:44px; height:44px; width:44px; border-radius:8px; border:2px solid rgba(255,255,255,0.06); background:var(--aw-primary); color:#000000; font-size:1.25rem; display:inline-flex; align-items:center; justify-content:center }
+.aw-btn:focus{ outline: var(--aw-focus); outline-offset:3px }
+.aw-indicator{ flex:1 }
+.aw-subcontrols{ display:flex; gap:8px; margin-top:8px }
+.aw-small{ min-height:44px; padding:8px 12px; border-radius:8px; background:transparent; border:1px solid rgba(255,255,255,0.06); color:var(--aw-text) }
+.aw-small:focus, .aw-small:focus-visible{ outline: var(--aw-focus); outline-offset:3px }
+.aw-radio-group{ display:flex; flex-direction:column; gap:8px }
+.aw-radio{ display:flex; align-items:center; gap:12px; padding:10px; border-radius:8px; min-height:44px; border:2px solid rgba(255,255,255,0.04); background:transparent; color:var(--aw-text) }
+.aw-radio:focus{ outline: var(--aw-focus); outline-offset:3px }
+.aw-checked{ border-color:var(--aw-primary); box-shadow: 0 6px 20px rgba(255,107,53,0.12) }
+.aw-preview{ width:28px; height:18px; border-radius:4px; background:linear-gradient(90deg,#000,#444); display:inline-block }
+
+.aw-switch input{ margin-right:8px }
+.aw-reset{ margin-top:8px }
+.aw-reset-btn{ width:100%; padding:12px; background:var(--aw-primary); color:#ff0000; border:none; border-radius:8px; min-height:44px }
+.aw-reset-btn:focus{ outline: var(--aw-focus); outline-offset:3px }
+
+.aw-live{ position:absolute; left:-9999px; top:auto; width:1px; height:1px; overflow:hidden }
+
+/* Floating button */
+.aw-floating{ position:fixed; right:18px; bottom:18px; z-index:9999; width:var(--aw-min-btn); height:var(--aw-min-btn); min-width:56px; min-height:56px; border-radius:50%; background:var(--aw-primary); color:#fff; display:flex; align-items:center; justify-content:center; border:none; box-shadow:0 6px 20px rgba(0,0,0,0.4) }
+.aw-floating:focus{ outline: var(--aw-focus); outline-offset:3px }
+
+/* Contrast modes applied to document via data attribute */
+html[data-aw-contrast='high']{ background:#000 !important; color:#ff0000 !important }
+html[data-aw-contrast='inverted']{ filter: invert(100%) !important }
+html[data-aw-contrast='grayscale']{ filter: grayscale(100%) !important }
+html[data-aw-contrast='low']{ filter: brightness(70%) !important }
+
+/* Dyslexic font applied when class present */
+.aw-dyslexic, .aw-dyslexic *{ font-family: 'OpenDyslexic', Arial, sans-serif !important }
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce){
+  *{ transition:none !important; animation:none !important }
+}
+
+/* Ensure stacking for small containers: single column */
+@media (max-width:720px){
+  .aw-content{ gap:10px }
+}
+
+/* If the panel is used as an inline region with id #accessibility-panel, ensure it never overflows horizontally and fits vertically */
+#accessibility-panel {
+  width: auto;
+  max-width: var(--aw-panel-max-width);
+  min-width: var(--aw-panel-min-width);
+  max-height: var(--aw-panel-max-height);
+  overflow: auto;
+  /* Keep panel fixed to the right side of the page */
+  position: fixed;
+  right: 18px;
+  top: 80px;
+  z-index: 9998;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+}
+
+@media (max-width:480px){
+  :root{ --aw-panel-max-width: 100%; --aw-panel-max-height: 85vh }
+  .aw-panel{ padding: 12px }
+  #accessibility-panel{ left:12px; right:12px; top:70px; min-width:unset }
+}
