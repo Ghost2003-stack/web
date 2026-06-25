@@ -49,9 +49,10 @@ export default function Suplementos() {
           <div className="info">
             <h3>Proteína Whey</h3>
             <p>Proteína de alta calidad para recuperación muscular.</p>
+            <div>Cantidad de G: 100g</div>
             <div className="producto-acciones" aria-label="Detalles del producto Proteína Whey">
               <div className="precio">Precio: $30.000</div>
-              <label htmlFor="cantidad1">Cantidad</label>
+              <label htmlFor="cantidad1">Cantidad que desea llevar</label>
               <input type="number" id="cantidad1" name="cantidad1" className="cantidad-input" defaultValue={1} min={1} />
               <button type="button" data-product="Proteína Whey" data-price="30000" aria-label="Agregar Proteína Whey al carrito">Agregar al carrito</button>
             </div>
@@ -63,9 +64,10 @@ export default function Suplementos() {
           <div className="info">
             <h3>Creatina Monohidrato</h3>
             <p>Aumenta fuerza y resistencia en entrenamientos intensos.</p>
+            <div>Cantidad de G: 500g</div>
             <div className="producto-acciones" aria-label="Detalles del producto Creatina Monohidrato">
               <div className="precio">Precio: $40.000</div>
-              <label htmlFor="cantidad2">Cantidad</label>
+              <label htmlFor="cantidad2">Cantidad que desea llevar</label>
               <input type="number" id="cantidad2" name="cantidad2" className="cantidad-input" defaultValue={1} min={1} />
               <button type="button" data-product="Creatina Monohidrato" data-price="40000" aria-label="Agregar Creatina Monohidrato al carrito">Agregar al carrito</button>
             </div>
@@ -77,9 +79,10 @@ export default function Suplementos() {
           <div className="info">
             <h3>BCAA Complex</h3>
             <p>Aminoácidos ramificados para mayor rendimiento.</p>
+            <div>Cantidad de G: 200g</div>
             <div className="producto-acciones" aria-label="Detalles del producto BCAA Complex">
               <div className="precio">Precio: $15.000</div>
-              <label htmlFor="cantidad3">Cantidad</label>
+              <label htmlFor="cantidad3">Cantidad que desea llevar</label>
               <input type="number" id="cantidad3" name="cantidad3" className="cantidad-input" defaultValue={1} min={1} />
               <button type="button" data-product="BCAA Complex" data-price="15000" aria-label="Agregar BCAA Complex al carrito">Agregar al carrito</button>
             </div>
